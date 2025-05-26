@@ -270,17 +270,29 @@ class HomePage extends StatelessWidget {
                                         '\$${coffeeInfo[index]['price'].toString()}',
                                         style: kTextStyleSemiBold18.copyWith(
                                             color: priceColor)),
-                                    Container(
-                                        decoration: BoxDecoration(
-                                            color: orangeColor,
-                                            borderRadius:
-                                                BorderRadius.circular(8.r)),
-                                        child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 8.w, vertical: 8.h),
-                                            child: SvgPicture.asset(
-                                                'assets/icons/plus.svg',
-                                                color: Colors.white)))
+                                    GestureDetector(
+                                        onTap: () =>
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                  content: Text(
+                                                      '${coffeeInfo[index]['name']} added to cart'),
+                                                  duration:
+                                                      Duration(seconds: 2),
+                                                  backgroundColor: orangeColor),
+                                            ),
+                                        child: Container(
+                                            decoration: BoxDecoration(
+                                                color: orangeColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(8.r)),
+                                            child: Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 8.w,
+                                                    vertical: 8.h),
+                                                child: SvgPicture.asset(
+                                                    'assets/icons/plus.svg',
+                                                    color: Colors.white))))
                                   ],
                                 ),
                               ]),
