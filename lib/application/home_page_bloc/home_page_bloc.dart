@@ -10,9 +10,5 @@ part 'home_page_state.dart';
 class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
   HomePageBloc() : super(HomePageState.initial()) {
     HomePageState.registerEvents(this);
-
-    on<SelectCategory>((event, emit) {
-      emit(state.copyWith(selectedCategoryIndex: event.selectedCategoryIndex));
-    });
   }
 }

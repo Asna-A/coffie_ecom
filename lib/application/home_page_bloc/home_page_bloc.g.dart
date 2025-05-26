@@ -3,19 +3,6 @@
 part of 'home_page_bloc.dart';
 
 // **************************************************************************
-// EventGenerator
-// **************************************************************************
-
-class SelectCategory extends HomePageEvent {
-  final int selectedCategoryIndex;
-
-  const SelectCategory({required this.selectedCategoryIndex});
-
-  @override
-  List<Object?> get props => [selectedCategoryIndex];
-}
-
-// **************************************************************************
 // StateGenerator
 // **************************************************************************
 
