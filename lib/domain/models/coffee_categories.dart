@@ -3,7 +3,6 @@ final List<String> coffeeCategories = const [
   'Espresso',
   'Latte',
   'Cappuccino',
-  'Afvmericano',
   'Mocha',
   'Macchiato',
   'Flat White',

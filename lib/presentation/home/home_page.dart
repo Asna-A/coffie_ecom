@@ -133,7 +133,7 @@ Widget _buildBanner() {
 
 Widget _buildCategoryList() {
   return BlocSelector<HomePageBloc, HomePageState, int>(
-    selector: (state) => state.selectedCategoryIndex!,
+    selector: (state) => state.selectedCategoryIndex,
     builder: (context, selectedCategoryIndex) {
       return Container(
         color: frameColor,
@@ -179,108 +179,126 @@ Widget _buildCategoryList() {
 }
 
 Widget _buildCoffeeInfo() {
-  return Expanded(
-    child: Container(
-      color: frameColor,
-      child: GridView.builder(
-          padding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 16.w),
-          physics: BouncingScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 15.w,
-              mainAxisSpacing: 24.h,
-              childAspectRatio: 156.h / 238.w),
-          itemCount: coffeeInfo.length,
-          itemBuilder: (context, index) {
-            return Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12.r)),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Stack(children: [
-                        ClipRRect(
-                            borderRadius: BorderRadius.circular(12.r),
-                            child: Image.asset(coffeeInfo[index]['image'],
-                                height: 128.h,
-                                width: 140.w,
-                                fit: BoxFit.cover)),
-                        Align(
-                            alignment: Alignment.topRight,
-                            child: Opacity(
-                                opacity: 0.3,
-                                child: Container(
-                                    height: 28.h,
-                                    width: 51.w,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.only(
-                                            topRight: Radius.circular(12.r),
-                                            bottomLeft: Radius.circular(24.r)),
-                                        gradient: LinearGradient(
-                                            colors: [
-                                              darkBlackColor,
-                                              lightBlackColor
-                                            ],
-                                            begin: Alignment.topRight,
-                                            end: Alignment.bottomLeft))))),
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 8.h, left: 97.w),
-                            child: Row(
-                              children: [
-                                SvgPicture.asset('assets/icons/Star.svg'),
-                                SizedBox(width: 4.w),
-                                Text(coffeeInfo[index]['rating'].toString(),
-                                    style: kTextStyleRegular8.copyWith(
-                                        color: Colors.white))
-                              ],
-                            ),
-                          ),
-                        ),
-                      ]),
-                      SizedBox(height: 8.h),
-                      Text(coffeeInfo[index]['name'],
-                          style: kTextStyleSemiBold16),
-                      SizedBox(height: 4.h),
-                      Text(coffeeInfo[index]['category'],
-                          style:
-                              kTextStyleRegular12.copyWith(color: textColor)),
-                      SizedBox(height: 8.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  return BlocSelector<HomePageBloc, HomePageState, int>(
+    selector: (state) => state.selectedCategoryIndex,
+    builder: (context, selectedCategoryIndex) {
+      final selectedCategory = coffeeCategories[selectedCategoryIndex];
+      final filteredCoffeeInfo = selectedCategoryIndex == 0
+          ? coffeeInfo
+          : coffeeInfo
+              .where((element) => element['category'] == selectedCategory)
+              .toList();
+      return Expanded(
+        child: Container(
+          color: frameColor,
+          child: GridView.builder(
+              padding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 16.w),
+              physics: BouncingScrollPhysics(),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 15.w,
+                  mainAxisSpacing: 24.h,
+                  childAspectRatio: 156.h / 238.w),
+              itemCount: filteredCoffeeInfo.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12.r)),
+                  child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('\$${coffeeInfo[index]['price'].toString()}',
-                              style: kTextStyleSemiBold18.copyWith(
-                                  color: priceColor)),
-                          GestureDetector(
-                              onTap: () =>
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                        content: Text(
-                                            '${coffeeInfo[index]['name']} added to cart'),
-                                        duration: Duration(seconds: 2),
-                                        backgroundColor: orangeColor),
-                                  ),
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                      color: orangeColor,
-                                      borderRadius: BorderRadius.circular(8.r)),
-                                  child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 8.w, vertical: 8.h),
-                                      child: SvgPicture.asset(
-                                          'assets/icons/plus.svg',
-                                          color: Colors.white))))
-                        ],
-                      ),
-                    ]),
-              ),
-            );
-          }),
-    ),
+                          Stack(children: [
+                            ClipRRect(
+                                borderRadius: BorderRadius.circular(12.r),
+                                child: Image.asset(
+                                    filteredCoffeeInfo[index]['image'],
+                                    height: 128.h,
+                                    width: 140.w,
+                                    fit: BoxFit.cover)),
+                            Align(
+                                alignment: Alignment.topRight,
+                                child: Opacity(
+                                    opacity: 0.3,
+                                    child: Container(
+                                        height: 28.h,
+                                        width: 51.w,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                                topRight: Radius.circular(12.r),
+                                                bottomLeft:
+                                                    Radius.circular(24.r)),
+                                            gradient: LinearGradient(
+                                                colors: [
+                                                  darkBlackColor,
+                                                  lightBlackColor
+                                                ],
+                                                begin: Alignment.topRight,
+                                                end: Alignment.bottomLeft))))),
+                            Align(
+                              alignment: Alignment.topRight,
+                              child: Padding(
+                                padding: EdgeInsets.only(top: 8.h, left: 97.w),
+                                child: Row(
+                                  children: [
+                                    SvgPicture.asset('assets/icons/Star.svg'),
+                                    SizedBox(width: 4.w),
+                                    Text(
+                                        filteredCoffeeInfo[index]['rating']
+                                            .toString(),
+                                        style: kTextStyleRegular8.copyWith(
+                                            color: Colors.white))
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ]),
+                          SizedBox(height: 8.h),
+                          Text(filteredCoffeeInfo[index]['name'],
+                              style: kTextStyleSemiBold16),
+                          SizedBox(height: 4.h),
+                          Text(filteredCoffeeInfo[index]['category'],
+                              style: kTextStyleRegular12.copyWith(
+                                  color: textColor)),
+                          SizedBox(height: 8.h),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                  '\$${filteredCoffeeInfo[index]['price'].toString()}',
+                                  style: kTextStyleSemiBold18.copyWith(
+                                      color: priceColor)),
+                              GestureDetector(
+                                  onTap: () => ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                            content: Text(
+                                                '${filteredCoffeeInfo[index]['name']} added to cart'),
+                                            duration: Duration(seconds: 2),
+                                            backgroundColor: orangeColor),
+                                      ),
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                          color: orangeColor,
+                                          borderRadius:
+                                              BorderRadius.circular(8.r)),
+                                      child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 8.w, vertical: 8.h),
+                                          child: SvgPicture.asset(
+                                              'assets/icons/plus.svg',
+                                              color: Colors.white))))
+                            ],
+                          ),
+                        ]),
+                  ),
+                );
+              }),
+        ),
+      );
+    },
   );
 }
