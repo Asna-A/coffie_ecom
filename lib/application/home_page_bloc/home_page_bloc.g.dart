@@ -45,54 +45,38 @@ class UpdateSelectedCategoryIndexEvent extends HomePageEvent {
   List<Object?> get props => [selectedCategoryIndex];
 }
 
-class UpdateSelectedIconIndexEvent extends HomePageEvent {
-  final int selectedIconIndex;
-  const UpdateSelectedIconIndexEvent({required this.selectedIconIndex});
-
-  @override
-  List<Object?> get props => [selectedIconIndex];
-}
-
 /// A state class that represents the complete state of the 'HomePageBloc'.
 /// This class is immutable and extends Equatable for value comparison.
 class HomePageState extends Equatable {
   final bool isLoading;
   final int selectedCategoryIndex;
-  final int selectedIconIndex;
 
   /// Creates a new instance of HomePageState with the given parameters.
   const HomePageState(
-      {required this.isLoading,
-      required this.selectedCategoryIndex,
-      required this.selectedIconIndex});
+      {required this.isLoading, required this.selectedCategoryIndex});
 
   /// Creates the initial state of the 'HomePageBloc'.
   /// This method sets up default values for all state properties.
   static HomePageState initial() {
-    return HomePageState(
-        isLoading: false, selectedCategoryIndex: 0, selectedIconIndex: 0);
+    return HomePageState(isLoading: false, selectedCategoryIndex: 0);
   }
 
   /// Creates a copy of this state with the given parameters replaced.
   /// If a parameter is not provided, the value from the current state is used.
-  HomePageState copyWith(
-      {bool? isLoading, int? selectedCategoryIndex, int? selectedIconIndex}) {
+  HomePageState copyWith({bool? isLoading, int? selectedCategoryIndex}) {
     return HomePageState(
         isLoading: isLoading ?? this.isLoading,
         selectedCategoryIndex:
-            selectedCategoryIndex ?? this.selectedCategoryIndex,
-        selectedIconIndex: selectedIconIndex ?? this.selectedIconIndex);
+            selectedCategoryIndex ?? this.selectedCategoryIndex);
   }
 
   /// Creates a copy of this state with the ability to set specific fields to null.
   /// The boolean parameters control whether the corresponding field should be set to null.
-  HomePageState copyWithNull(
-      {bool? isLoading, int? selectedCategoryIndex, int? selectedIconIndex}) {
+  HomePageState copyWithNull({bool? isLoading, int? selectedCategoryIndex}) {
     return HomePageState(
         isLoading: isLoading ?? this.isLoading,
         selectedCategoryIndex:
-            selectedCategoryIndex ?? this.selectedCategoryIndex,
-        selectedIconIndex: selectedIconIndex ?? this.selectedIconIndex);
+            selectedCategoryIndex ?? this.selectedCategoryIndex);
   }
 
   /// Registers all event handlers for the 'HomePageBloc'.
@@ -106,16 +90,11 @@ class HomePageState extends Equatable {
       emit(bloc.state
           .copyWith(selectedCategoryIndex: event.selectedCategoryIndex));
     });
-
-    bloc.on<UpdateSelectedIconIndexEvent>((event, emit) {
-      emit(bloc.state.copyWith(selectedIconIndex: event.selectedIconIndex));
-    });
   }
 
   /// Returns a list of all properties used for equality comparison.
   @override
-  List<Object?> get props =>
-      [isLoading, selectedCategoryIndex, selectedIconIndex];
+  List<Object?> get props => [isLoading, selectedCategoryIndex];
 }
 
 /// Extension on BuildContext that provides convenient methods for updating the 'HomePageBloc' state.
@@ -127,7 +106,6 @@ extension HomePageBlocContextExtension on BuildContext {
   void setHomePageBlocState({
     dynamic isLoading = UnspecifiedDataType.instance,
     dynamic selectedCategoryIndex = UnspecifiedDataType.instance,
-    dynamic selectedIconIndex = UnspecifiedDataType.instance,
   }) {
     final myBloc = read<HomePageBloc>(); // Read the MyBloc instance
     if (isLoading != UnspecifiedDataType.instance) {
@@ -137,11 +115,6 @@ extension HomePageBlocContextExtension on BuildContext {
     if (selectedCategoryIndex != UnspecifiedDataType.instance) {
       myBloc.add(UpdateSelectedCategoryIndexEvent(
           selectedCategoryIndex: selectedCategoryIndex as int));
-    }
-
-    if (selectedIconIndex != UnspecifiedDataType.instance) {
-      myBloc.add(UpdateSelectedIconIndexEvent(
-          selectedIconIndex: selectedIconIndex as int));
     }
   }
 }

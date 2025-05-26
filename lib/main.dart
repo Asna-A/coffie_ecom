@@ -1,5 +1,5 @@
 import 'package:coffie_ecom/core/routes/routes.dart';
-import 'package:coffie_ecom/presentation/home_page/home_page.dart';
+import 'package:coffie_ecom/presentation/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

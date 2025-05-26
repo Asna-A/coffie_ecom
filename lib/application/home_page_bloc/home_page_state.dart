@@ -4,5 +4,4 @@ part of 'home_page_bloc.dart';
 abstract class _$$HomePageState {
   final bool isLoading = false;
   final int selectedCategoryIndex = 0;
-  final int selectedIconIndex = 0;
 }

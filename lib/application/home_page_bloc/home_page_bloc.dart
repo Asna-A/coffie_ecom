@@ -14,8 +14,5 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
     on<SelectCategory>((event, emit) {
       emit(state.copyWith(selectedCategoryIndex: event.selectedCategoryIndex));
     });
-    on<SelectIcon>((event, emit) {
-      emit(state.copyWith(selectedIconIndex: event.selectedIconIndex));
-    });
   }
 }
