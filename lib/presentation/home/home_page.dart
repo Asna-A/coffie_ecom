@@ -188,7 +188,7 @@ class HomePage extends StatelessWidget {
                         crossAxisCount: 2,
                         crossAxisSpacing: 15.w,
                         mainAxisSpacing: 24.h,
-                        childAspectRatio: 0.625),
+                        childAspectRatio: 156.h / 238.w),
                     itemCount: coffeeInfo.length,
                     itemBuilder: (context, index) {
                       return Container(
