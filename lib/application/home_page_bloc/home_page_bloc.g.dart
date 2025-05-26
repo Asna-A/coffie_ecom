@@ -15,15 +15,6 @@ class SelectCategory extends HomePageEvent {
   List<Object?> get props => [selectedCategoryIndex];
 }
 
-class SelectIcon extends HomePageEvent {
-  final int selectedIconIndex;
-
-  const SelectIcon({required this.selectedIconIndex});
-
-  @override
-  List<Object?> get props => [selectedIconIndex];
-}
-
 // **************************************************************************
 // StateGenerator
 // **************************************************************************
