@@ -7,3 +7,4 @@ const lightBlackColor = Color(0XFF313131);
 const lightWhiteColor = Color(0XFFD8D8D8);
 const chipBgColor = Color(0xFFEDEDED);
 const priceColor = Color(0xFF050505);
+const frameColor = Color(0xFFF9F9F9);
