@@ -1,0 +1,101 @@
+import 'package:coffie_ecom/domain/IHomeRepo/IHomeRepo.dart';
+import 'package:coffie_ecom/domain/models/coffee_info.dart';
+import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
+
+@LazySingleton(as: IHomeRepo)
+class HomeRepository implements IHomeRepo {
+  @override
+  Future<Either<String, List<CoffeeModel>>> getCoffeesInfo() async {
+    await Future.delayed(Duration(seconds: 2));
+
+    final List<Map<String, dynamic>> coffeeInfo = const [
+      {
+        'name': 'Flat White',
+        'price': 8.0,
+        'image': 'assets/images/coffee1.png',
+        'rating': '4.3',
+        'category': 'Turkish Coffee',
+      },
+      {
+        'name': 'Espresso Solo',
+        'price': 3.5,
+        'image': 'assets/images/coffee2.png',
+        'rating': '4.5',
+        'category': 'Espresso',
+      },
+      {
+        'name': 'Latte',
+        'price': 4.0,
+        'image': 'assets/images/coffee3.png',
+        'rating': '4.6',
+        'category': 'Latte',
+      },
+      {
+        'name': 'Cappuccino',
+        'price': 4.2,
+        'image': 'assets/images/coffee4.png',
+        'rating': '4.4',
+        'category': 'Latte',
+      },
+      {
+        'name': 'Americano',
+        'price': 3.8,
+        'image': 'assets/images/coffee5.png',
+        'rating': '4.2',
+        'category': 'Espresso',
+      },
+      {
+        'name': 'Mocha',
+        'price': 4.5,
+        'image': 'assets/images/coffee2.png',
+        'rating': '4.7',
+        'category': 'Chocolate',
+      },
+      {
+        'name': 'Latte',
+        'price': 4.0,
+        'image': 'assets/images/coffee3.png',
+        'rating': '4.6',
+        'category': 'Latte',
+      },
+      {
+        'name': 'Vanilla Latte',
+        'price': 4.2,
+        'image': 'assets/images/coffee4.png',
+        'rating': '4.4',
+        'category': 'Latte',
+      },
+      {
+        'name': 'Caramel Latte',
+        'price': 1.2,
+        'image': 'assets/images/coffee1.png',
+        'rating': '3.4',
+        'category': 'Latte',
+      },
+      {
+        'name': 'Americano',
+        'price': 3.8,
+        'image': 'assets/images/coffee5.png',
+        'rating': '4.2',
+        'category': 'Espresso',
+      },
+      {
+        'name': 'Mocha',
+        'price': 4.5,
+        'image': 'assets/images/coffee2.png',
+        'rating': '4.7',
+        'category': 'Chocolate',
+      },
+      {
+        'name': 'Dopio',
+        'price': 4.5,
+        'image': 'assets/images/coffee5.png',
+        'rating': '4.7',
+        'category': 'Espresso',
+      },
+    ];
+
+    return Right(coffeeInfo.map((e) => CoffeeModel.fromJson(e)).toList());
+  }
+}

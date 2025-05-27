@@ -1,4 +1,5 @@
 import 'package:coffie_ecom/application/home_page_bloc/home_page_bloc.dart';
+import 'package:coffie_ecom/domain/core/dependency_injection/di_configuration.dart';
 import 'package:coffie_ecom/presentation/cart/cart_page.dart';
 import 'package:coffie_ecom/presentation/home/home_page.dart';
 import 'package:coffie_ecom/presentation/notification/notification_page.dart';
@@ -14,7 +15,7 @@ abstract class AppRouter {
           settings: settings,
           builder: (context) {
             return BlocProvider(
-              create: (context) => HomePageBloc(),
+              create: (context) => getIt<HomePageBloc>(),
               child: HomePage(),
             );
           },

@@ -3,6 +3,17 @@
 part of 'home_page_bloc.dart';
 
 // **************************************************************************
+// EventGenerator
+// **************************************************************************
+
+class FetchCoffeeList extends HomePageEvent {
+  const FetchCoffeeList();
+
+  @override
+  List<Object?> get props => [];
+}
+
+// **************************************************************************
 // StateGenerator
 // **************************************************************************
 
@@ -23,38 +34,58 @@ class UpdateSelectedCategoryIndexEvent extends HomePageEvent {
   List<Object?> get props => [selectedCategoryIndex];
 }
 
+class UpdateCoffeeListEvent extends HomePageEvent {
+  final List<CoffeeModel> coffeeList;
+  const UpdateCoffeeListEvent({required this.coffeeList});
+
+  @override
+  List<Object?> get props => [coffeeList];
+}
+
 /// A state class that represents the complete state of the 'HomePageBloc'.
 /// This class is immutable and extends Equatable for value comparison.
 class HomePageState extends Equatable {
   final bool isLoading;
   final int selectedCategoryIndex;
+  final List<CoffeeModel> coffeeList;
 
   /// Creates a new instance of HomePageState with the given parameters.
   const HomePageState(
-      {required this.isLoading, required this.selectedCategoryIndex});
+      {required this.isLoading,
+      required this.selectedCategoryIndex,
+      required this.coffeeList});
 
   /// Creates the initial state of the 'HomePageBloc'.
   /// This method sets up default values for all state properties.
   static HomePageState initial() {
-    return HomePageState(isLoading: false, selectedCategoryIndex: 0);
+    return HomePageState(
+        isLoading: false, selectedCategoryIndex: 0, coffeeList: []);
   }
 
   /// Creates a copy of this state with the given parameters replaced.
   /// If a parameter is not provided, the value from the current state is used.
-  HomePageState copyWith({bool? isLoading, int? selectedCategoryIndex}) {
+  HomePageState copyWith(
+      {bool? isLoading,
+      int? selectedCategoryIndex,
+      List<CoffeeModel>? coffeeList}) {
     return HomePageState(
         isLoading: isLoading ?? this.isLoading,
         selectedCategoryIndex:
-            selectedCategoryIndex ?? this.selectedCategoryIndex);
+            selectedCategoryIndex ?? this.selectedCategoryIndex,
+        coffeeList: coffeeList ?? this.coffeeList);
   }
 
   /// Creates a copy of this state with the ability to set specific fields to null.
   /// The boolean parameters control whether the corresponding field should be set to null.
-  HomePageState copyWithNull({bool? isLoading, int? selectedCategoryIndex}) {
+  HomePageState copyWithNull(
+      {bool? isLoading,
+      int? selectedCategoryIndex,
+      List<CoffeeModel>? coffeeList}) {
     return HomePageState(
         isLoading: isLoading ?? this.isLoading,
         selectedCategoryIndex:
-            selectedCategoryIndex ?? this.selectedCategoryIndex);
+            selectedCategoryIndex ?? this.selectedCategoryIndex,
+        coffeeList: coffeeList ?? this.coffeeList);
   }
 
   /// Registers all event handlers for the 'HomePageBloc'.
@@ -68,11 +99,15 @@ class HomePageState extends Equatable {
       emit(bloc.state
           .copyWith(selectedCategoryIndex: event.selectedCategoryIndex));
     });
+
+    bloc.on<UpdateCoffeeListEvent>((event, emit) {
+      emit(bloc.state.copyWith(coffeeList: event.coffeeList));
+    });
   }
 
   /// Returns a list of all properties used for equality comparison.
   @override
-  List<Object?> get props => [isLoading, selectedCategoryIndex];
+  List<Object?> get props => [isLoading, selectedCategoryIndex, coffeeList];
 }
 
 /// Extension on BuildContext that provides convenient methods for updating the 'HomePageBloc' state.
@@ -84,6 +119,7 @@ extension HomePageBlocContextExtension on BuildContext {
   void setHomePageBlocState({
     dynamic isLoading = UnspecifiedDataType.instance,
     dynamic selectedCategoryIndex = UnspecifiedDataType.instance,
+    dynamic coffeeList = UnspecifiedDataType.instance,
   }) {
     final myBloc = read<HomePageBloc>(); // Read the MyBloc instance
     if (isLoading != UnspecifiedDataType.instance) {
@@ -93,6 +129,11 @@ extension HomePageBlocContextExtension on BuildContext {
     if (selectedCategoryIndex != UnspecifiedDataType.instance) {
       myBloc.add(UpdateSelectedCategoryIndexEvent(
           selectedCategoryIndex: selectedCategoryIndex as int));
+    }
+
+    if (coffeeList != UnspecifiedDataType.instance) {
+      myBloc.add(
+          UpdateCoffeeListEvent(coffeeList: coffeeList.cast<CoffeeModel>()));
     }
   }
 }
