@@ -59,7 +59,7 @@ class HomePageState extends Equatable {
   /// This method sets up default values for all state properties.
   static HomePageState initial() {
     return HomePageState(
-        isLoading: false, selectedCategoryIndex: 0, coffeeList: []);
+        isLoading: true, selectedCategoryIndex: 0, coffeeList: []);
   }
 
   /// Creates a copy of this state with the given parameters replaced.

@@ -21,8 +21,7 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
 
   Future<void> _onFetchCoffeeList(
       FetchCoffeeList event, Emitter<HomePageState> emit) async {
-    emit(state.copyWith(isLoading: true));
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 3));
     final result = await homeRepo.getCoffeesInfo();
     result.fold(
       (failure) {
